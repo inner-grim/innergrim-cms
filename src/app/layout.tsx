@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { meta_data } from '@/common/enums';
-import { Noto_Sans_KR } from 'next/font/google';
+import { Heebo, Noto_Sans_KR } from 'next/font/google';
+import Navigation from '@/components/navigation/navigation';
 
-const notoSansKr = Noto_Sans_KR({
+const heebo = Heebo({
   weight: ['400'],
   subsets: ['latin'],
 });
@@ -21,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={notoSansKr.className}>{children}</body>
+      <body className={heebo.className}>
+        <Navigation />
+        {children}
+      </body>
     </html>
   );
 }
