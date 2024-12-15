@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/styles/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { meta_data } from '@/common/enums';
 import { Heebo, Noto_Sans_KR } from 'next/font/google';
-import Navigation from '@/components/navigation/navigation';
+import SideBar from '@/components/navigation/SideBar';
 
 const heebo = Heebo({
   weight: ['400'],
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={heebo.className}>
-        <Navigation />
+        <SideBar />
         {children}
       </body>
     </html>

@@ -1,22 +1,16 @@
+'use client';
+import { useRouter } from 'next/navigation';
+
 export default function Login() {
+  const router = useRouter();
+
+  const login = () => {
+    router.push('/');
+  };
+
   return (
     <>
       <div className="container-xxl position-relative bg-white d-flex p-0">
-        {/* Spinner Start */}
-        {/* <div
-          id="spinner"
-          className="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
-        >
-          <div
-            className="spinner-border text-primary"
-            style={{ width: '3rem', height: '3rem' }}
-            role="status"
-          >
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div> */}
-        {/* Spinner End */}
-        {/* Sign In Start */}
         <div className="container-fluid">
           <div
             className="row h-100 align-items-center justify-content-center"
@@ -37,7 +31,7 @@ export default function Login() {
                     type="email"
                     className="form-control"
                     id="floatingInput"
-                    placeholder="name@example.com"
+                    placeholder="ID"
                   />
                   <label htmlFor="floatingInput">ID</label>
                 </div>
@@ -50,27 +44,12 @@ export default function Login() {
                   />
                   <label htmlFor="floatingPassword">Password</label>
                 </div>
-                {/* <div className="d-flex align-items-center justify-content-between mb-4">
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="exampleCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                      Check me out
-                    </label>
-                  </div>
-                </div> */}
                 <button
-                  type="submit"
                   className="btn btn-primary py-3 w-100 mb-4"
+                  onClick={login}
                 >
                   로그인
                 </button>
-                {/* <p className="text-center mb-0">
-                  Don't have an Account? <a href="">Sign Up</a>
-                </p> */}
               </div>
             </div>
           </div>
