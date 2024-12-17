@@ -19,7 +19,7 @@ pnpm install
 pnpm dev
 ```
 
-### How to start
+### How to build
 
 ```bash
 pnpm build
