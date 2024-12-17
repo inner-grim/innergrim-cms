@@ -13,6 +13,7 @@ export default function SideBar() {
       router.push('/member-list');
     } else if (menu === 'service-statistics') {
       router.push('service-statistics');
+      // test
     }
     // else if (menu === 'emotion-category') {
     //   router.push('emotion-category');
