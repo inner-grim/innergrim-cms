@@ -123,6 +123,8 @@ body {
 
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
   padding: 7px 20px;
   color: var(--dark);
   font-weight: 500;
@@ -141,6 +143,7 @@ body {
 .sidebar .navbar .navbar-nav .nav-link i {
   width: 40px;
   height: 40px;
+  margin-right: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -170,10 +173,16 @@ body {
 
 .sidebar .navbar .dropdown-item {
   padding-left: 25px;
+  margin-top: 5px;
   border-radius: 0 30px 30px 0;
 }
 
+.sidebar .navbar .dropdown-item.active {
+  background-color: var(--primary);
+}
+
 .content .navbar .navbar-nav .nav-link {
+  display: flex;
   margin-left: 25px;
   padding: 12px 0;
   color: var(--dark);
@@ -210,11 +219,11 @@ body {
   transform: rotate(-180deg);
 } */
 
-@media (max-width: 575.98px) {
+/* @media (max-width: 575.98px) {
   .content .navbar .navbar-nav .nav-link {
     margin-left: 15px;
   }
-}
+} */
 
 /*** Date Picker ***/
 .bootstrap-datetimepicker-widget.bottom {

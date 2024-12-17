@@ -16,5 +16,5 @@ export default function page() {
     router.push('/service-statistics');
   }, []);
 
-  return <></>;
+  return <div className="content"></div>;
 }
