@@ -66,6 +66,9 @@ jobs:
           scp -o StrictHostKeyChecking=no -i /tmp/id_rsa innergrim-cms.tar ec2-user@${{ secrets.DEV_AWS_EC2_HOST }}:/home/ec2-user
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@${{ secrets.DEV_AWS_EC2_HOST }} << 'EOF' 
 
+          docker load < /home/ec2-user/innergrim-cms.tar
+          ls -l /home/ec2-user/innergrim-cms.tar
+
           docker rmi -f innergrim-cms || true
           docker load < /home/ec2-user/innergrim-cms.tar
           docker stop innergrim-cms || true
