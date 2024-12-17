@@ -46,16 +46,16 @@ jobs:
           pnpm run build
 
       - name: Build Docker image
-        run: docker build -t innergrim-service-api:latest -f .docker/Dockerfile .
+        run: docker build -t innergrim-cms:latest -f .docker/Dockerfile .
 
       - name: Save Docker image to a tar file
-        run: docker save innergrim-service-api:latest > innergrim-service-api.tar
+        run: docker save innergrim-cms:latest > innergrim-cms.tar
 
       - name: Upload Docker image tar as an artifact
         uses: actions/upload-artifact@v3
         with:
           name: docker-image
-          path: innergrim-service-api.tar
+          path: innergrim-cms.tar
 
       - name: Deploy to EC2
         run: |
@@ -63,17 +63,17 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
 
-          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa innergrim-service-api.tar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user
+          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa innergrim-cms.tar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@${{ secrets.EC2_HOST }} << 'EOF' 
 
-          docker rmi -f innergrim-service-api || true
-          docker load < /home/ec2-user/innergrim-service-api.tar
-          docker stop innergrim-service-api || true
-          docker rm innergrim-service-api || true
-          docker run -d --name innergrim-service-api --network service-network -p 5000:5000 \
+          docker rmi -f innergrim-cms || true
+          docker load < /home/ec2-user/innergrim-cms.tar
+          docker stop innergrim-cms || true
+          docker rm innergrim-cms || true
+          docker run -d --name innergrim-cms --network service-network -p 3000:3000 \
             -e "SPRING_PROFILES_ACTIVE=dev" \
             -e "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" \
             -e "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
             -e "AWS_REGION=${{ secrets.AWS_REGION }}" \
-            innergrim-service-api:latest
+            innergrim-cms:latest
           EOF
