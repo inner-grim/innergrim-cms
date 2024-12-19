@@ -1,4 +1,4 @@
-import { Bar } from "react-chartjs-2";
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,7 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -15,24 +15,22 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const barChartData = {
-  labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
   datasets: [
     {
-      label: "Expenses",
+      label: 'Expenses',
       data: [1200, 300, 150, 180, 100, 900, 2000],
       backgroundColor: [
-        "rgba(255,99,132,0.2)",
-        "yellow",
-        "green",
-        "orange",
-        "blue",
+        'rgba(101,184,254,0.8)',
+        'rgba(123,193,253,0.8)',
+        'rgba(144,201,253,0.8)',
+        'rgba(165,210,252,0.8)',
+        'rgba(184,219,252,0.8)',
       ],
-      borderColor: ["gray"],
-      borderWidth: 1,
     },
   ],
 };
