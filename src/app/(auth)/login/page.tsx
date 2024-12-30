@@ -17,7 +17,9 @@ export default function Login() {
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     } else {
-      // accessToken 저장
+      // 쿠키 설정
+      // const res = NextResponse.next();
+      // res.cookies.set('cookie-name', 'cookie-value');
       router.push('/');
     }
   };
