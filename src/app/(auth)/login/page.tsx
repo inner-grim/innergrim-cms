@@ -1,11 +1,19 @@
 'use client';
+import { API_URL } from '@/common/constans';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const router = useRouter();
 
-  const login = () => {
-    router.push('/');
+  const login = async () => {
+    const response = await fetch(API_URL);
+    console.log('22', response);
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    } else {
+      router.push('/');
+    }
+    // const json = await response.json();
   };
 
   return (
