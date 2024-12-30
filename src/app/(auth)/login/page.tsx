@@ -1,19 +1,25 @@
 'use client';
-import { API_URL } from '@/common/constans';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const router = useRouter();
 
   const login = async () => {
-    const response = await fetch(API_URL);
-    console.log('22', response);
+    const response = await fetch('api/auth/login', {
+      method: 'POST',
+      // input 값 받아서 저장
+      body: JSON.stringify({
+        loginId: 'INGM_Admin_00001',
+        password: 'innergrim1234!@',
+      }),
+    });
+
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     } else {
+      // accessToken 저장
       router.push('/');
     }
-    // const json = await response.json();
   };
 
   return (
