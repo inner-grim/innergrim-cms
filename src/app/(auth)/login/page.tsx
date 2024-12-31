@@ -5,17 +5,21 @@ export default function Login() {
   const router = useRouter();
 
   const login = async () => {
-    const response = await fetch('api/auth/login', {
-      method: 'POST',
-      // input 값 받아서 저장
-      body: JSON.stringify({
-        loginId: 'INGM_Admin_00001',
-        password: 'innergrim1234!@',
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // input 값 받아서 저장
+        body: JSON.stringify({
+          loginId: 'INGM_Admin_00001',
+          password: 'innergrim1234!@',
+        }),
+      },
+    );
 
     if (!response.ok) {
-      throw new Error('Failed to fetch data');
+      throw new Error(`Failed to fetch data: ${response.statusText}`);
     } else {
       // 쿠키 설정
       // const res = NextResponse.next();
