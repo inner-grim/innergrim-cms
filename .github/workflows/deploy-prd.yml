@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: |
           CI=false
-          pnpm run build
+          pnpm run build:prod
 
       - name: Build Docker image
         run: docker build -t innergrim-cms:latest -f .docker/Dockerfile .
