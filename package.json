@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "env-cmd -f .env.local next dev",
+    "build:dev": "env-cmd -f .env.devlopment next build",
+    "build:prod": "env-cmd -f .env.production next build",
+    "start:dev": "env-cmd -f .env.devlopment next start",
+    "start:prod": "env-cmd -f .env.production next start",
     "lint": "next lint"
   },
   "dependencies": {
     "bootstrap": "5.3.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.7",
+    "env-cmd": "^10.1.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-bootstrap": "^2.10.6",
