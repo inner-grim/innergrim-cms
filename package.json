@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "env-cmd -f .env.local next dev",
-    "build:dev": "env-cmd -f .env.devlopment next build",
+    "build:dev": "env-cmd -f .env.development next build",
     "build:prod": "env-cmd -f .env.production next build",
-    "start:dev": "env-cmd -f .env.devlopment next start",
+    "start:dev": "env-cmd -f .env.development next start",
     "start:prod": "env-cmd -f .env.production next start",
     "lint": "next lint"
   },
