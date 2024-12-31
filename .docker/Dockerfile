@@ -9,7 +9,10 @@ RUN pnpm install
 
 # Copy source code and build
 COPY . .
-RUN pnpm run build
+
+# 환경 변수에 따라 다른 빌드 스크립트 실행 
+ARG BUILD_ENV=production
+RUN if [ "$BUILD_ENV" = "development" ]; then pnpm run build:dev; else pnpm run build:prod; fi
 
 # Step 2: Run the application
 FROM node:22-alpine AS runner
