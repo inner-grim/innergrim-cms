@@ -1,0 +1,75 @@
+name: INNERGRIM CMS DEV DEPLOY
+
+on:
+  push:
+    branches: ['feature/deploy']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Generate Environment Variables File for Devlopment
+        run: |
+          echo "NEXT_PUBLIC_API_URL=$DEV_NEXT_PUBLIC_API_URL" >> .env.development
+        env:
+          DEV_NEXT_PUBLIC_API_URL: ${{secrets.DEV_NEXT_PUBLIC_API_URL}}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: |
+          CI=false
+          pnpm run build:dev
+
+      - name: Build Docker image
+        run: |
+          docker build -t innergrim-cms:latest -f .docker/Dockerfile --build-arg BUILD_ENV=development .
+
+      - name: Save Docker image to a tar file
+        run: docker save innergrim-cms:latest > innergrim-cms.tar
+
+      - name: Upload Docker image tar as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: innergrim-cms.tar
+
+      - name: Deploy to EC2
+        run: |
+          # Save the SSH key to a temporary file
+          echo "${{ secrets.DEV_AWS_EC2_SSH_KEY }}" > /tmp/id_rsa
+          chmod 600 /tmp/id_rsa
+
+          scp -o StrictHostKeyChecking=no -i /tmp/id_rsa innergrim-cms.tar ec2-user@${{ secrets.DEV_AWS_EC2_HOST }}:/home/ec2-user
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@${{ secrets.DEV_AWS_EC2_HOST }} << 'EOF' 
+
+          docker load < /home/ec2-user/innergrim-cms.tar
+          ls -l /home/ec2-user/innergrim-cms.tar
+
+          docker rmi -f innergrim-cms || true
+          docker load < /home/ec2-user/innergrim-cms.tar
+          docker stop innergrim-cms || true
+          docker rm innergrim-cms || true
+          docker run -d --name innergrim-cms --network service-network -p 3000:3000 \
+            -e "SPRING_PROFILES_ACTIVE=dev" \
+            -e "AWS_ACCESS_KEY_ID=${{ secrets.DEV_AWS_ACCESS_KEY }}" \
+            -e "AWS_SECRET_ACCESS_KEY=${{ secrets.DEV_AWS_ACCESS_SECRET }}" \
+            -e "AWS_REGION=${{ secrets.AWS_REGION }}" \
+            innergrim-cms:latest
+          EOF
