@@ -10,9 +10,6 @@ RUN pnpm install
 # Copy source code and build
 COPY . .
 
-# Copy environment file
-COPY /app/.env.development ./.env.development
-
 # 환경 변수에 따라 다른 빌드 스크립트 실행 
 ARG BUILD_ENV
 RUN pnpm run build:${BUILD_ENV}
@@ -20,6 +17,9 @@ RUN pnpm run build:${BUILD_ENV}
 # Step 2: Run the application
 FROM node:22-alpine AS runner
 WORKDIR /app
+
+# Copy environment file
+COPY ../.env.development /app/.env.development
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
