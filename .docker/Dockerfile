@@ -25,6 +25,10 @@ COPY --from=builder /app/package.json ./package.json
 RUN npm install pnpm -g
 RUN pnpm install 
 
-# Start Next.js
+# 런타임 환경 변수 설정
+ARG START_ENV=production
+ENV START_ENV=$START_ENV
+
+# Start Next.js 
 EXPOSE 3000
-CMD ["pnpm", "start"]
+CMD ["sh", "-c", "if [ \"$START_ENV\" = \"development\" ]; then pnpm run start:dev; else pnpm run start:prod; fi"]
