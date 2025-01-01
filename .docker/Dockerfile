@@ -11,7 +11,7 @@ RUN pnpm install
 COPY . .
 
 # Copy environment file
-COPY .env.development .env.development
+COPY /app/.env.development ./.env.development
 
 # 환경 변수에 따라 다른 빌드 스크립트 실행 
 ARG BUILD_ENV
