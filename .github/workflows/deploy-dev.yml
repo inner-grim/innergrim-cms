@@ -29,6 +29,9 @@ jobs:
         env:
           DEV_NEXT_PUBLIC_API_URL: ${{secrets.DEV_NEXT_PUBLIC_API_URL}}
 
+      - name: Debug Environment Variables
+        run: cat .env.development
+
       - name: Install dependencies
         run: pnpm install
 
