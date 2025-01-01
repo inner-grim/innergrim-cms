@@ -30,5 +30,5 @@ EXPOSE 3000
 ARG BUILD_ENV
 ENV BUILD_ENV=${BUILD_ENV}
 
-CMD ["pnpm", "start:${BUILD_ENV}"]
+CMD ["/bin/sh", "-c", "pnpm run start:${BUILD_ENV}"]
 
