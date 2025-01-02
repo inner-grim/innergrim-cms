@@ -18,8 +18,11 @@ RUN pnpm run build:${BUILD_ENV}
 FROM node:22-alpine AS runner
 WORKDIR /app
 
+# Set build-time argument with a default value
+ARG ENVIRONMENT=development
+
 # Copy environment file
-COPY ../.env.development /app/.env.development
+COPY ../.env.${ENVIRONMENT} /app/.env.${ENVIRONMENT}
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
