@@ -19,7 +19,7 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 
 # Set build-time argument with a default value
-ARG ENVIRONMENT=development
+ARG ENVIRONMENT
 
 # Copy environment file
 COPY ../.env.${ENVIRONMENT} /app/.env.${ENVIRONMENT}
@@ -32,7 +32,7 @@ RUN npm install pnpm -g
 RUN pnpm install 
 
 # 런타임 환경 변수 설정
-ARG START_ENV=production
+ARG START_ENV
 ENV START_ENV=$START_ENV
 
 # Start Next.js 
