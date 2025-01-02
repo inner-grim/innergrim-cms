@@ -11,12 +11,18 @@ RUN pnpm install
 COPY . .
 
 # 환경 변수에 따라 다른 빌드 스크립트 실행 
-ARG BUILD_ENV=production
-RUN if [ "$BUILD_ENV" = "development" ]; then pnpm run build:dev; else pnpm run build:prod; fi
+ARG BUILD_ENV
+RUN pnpm run build:${BUILD_ENV}
 
 # Step 2: Run the application
 FROM node:22-alpine AS runner
 WORKDIR /app
+
+# Set build-time argument with a default value
+ARG ENVIRONMENT
+
+# Copy environment file
+COPY ../.env.${ENVIRONMENT} /app/.env.${ENVIRONMENT}
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
@@ -25,6 +31,14 @@ COPY --from=builder /app/package.json ./package.json
 RUN npm install pnpm -g
 RUN pnpm install 
 
-# Start Next.js
+# 런타임 환경 변수 설정
+ARG START_ENV
+ENV START_ENV=$START_ENV
+
+# Start Next.js 
 EXPOSE 3000
-CMD ["pnpm", "start"]
+ARG BUILD_ENV
+ENV BUILD_ENV=${BUILD_ENV}
+
+CMD ["/bin/sh", "-c", "pnpm run start:${BUILD_ENV}"]
+

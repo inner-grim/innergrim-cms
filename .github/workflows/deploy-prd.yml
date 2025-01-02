@@ -39,7 +39,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t innergrim-cms:latest -f .docker/Dockerfile --build-arg BUILD_ENV=production .
+          docker build -t innergrim-cms:latest -f .docker/Dockerfile --build-arg BUILD_ENV=prod --build-arg ENVIRONMENT=production .
 
       - name: Save Docker image to a tar file
         run: docker save innergrim-cms:latest > innergrim-cms.tar
@@ -71,5 +71,6 @@ jobs:
             -e "AWS_ACCESS_KEY_ID=${{ secrets.PRD_AWS_ACCESS_KEY }}" \
             -e "AWS_SECRET_ACCESS_KEY=${{ secrets.PRD_AWS_ACCESS_SECRET }}" \
             -e "AWS_REGION=${{ secrets.AWS_REGION }}" \
+            -e "START_ENV=production" \
             innergrim-cms:latest
           EOF
