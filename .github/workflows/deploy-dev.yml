@@ -42,9 +42,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t innergrim-cms:latest -f .docker/Dockerfile \
-            --build-arg BUILD_ENV=development \
-            --build-arg START_ENV=development .
+          docker build -t innergrim-cms:latest -f .docker/Dockerfile --build-arg BUILD_ENV=dev --build-arg ENVIRONMENT=development .
 
       - name: Save Docker image to a tar file
         run: docker save innergrim-cms:latest > innergrim-cms.tar
