@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import styles from './page.module.scss';
 
 export default function Login() {
   const router = useRouter();
@@ -30,7 +31,9 @@ export default function Login() {
 
   return (
     <>
-      <div className="container-xxl position-relative bg-white d-flex p-0">
+      <div
+        className={`${styles.loginContainer} container-xxl bg-white d-flex p-0`}
+      >
         <div className="container-fluid">
           <div
             className="row h-100 align-items-center justify-content-center"
