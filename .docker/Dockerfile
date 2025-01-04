@@ -31,10 +31,6 @@ COPY --from=builder /app/package.json ./package.json
 RUN npm install pnpm -g
 RUN pnpm install 
 
-# 런타임 환경 변수 설정
-ARG START_ENV
-ENV START_ENV=$START_ENV
-
 # Start Next.js 
 EXPOSE 3000
 ARG BUILD_ENV
