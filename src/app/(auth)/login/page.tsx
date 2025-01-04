@@ -1,9 +1,25 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
+import { useState } from 'react';
+import { NextResponse } from 'next/server';
 
 export default function Login() {
   const router = useRouter();
+  const [id, setId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  // id 입력 시 호출
+  const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setId(event.target.value);
+    console.log(event.target.value);
+  };
+
+  // password 입력 시 호출
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+    console.log(event.target.value);
+  };
 
   const login = async () => {
     const response = await fetch(
@@ -11,10 +27,9 @@ export default function Login() {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        // input 값 받아서 저장
         body: JSON.stringify({
-          loginId: 'INGM_Admin_00001',
-          password: 'innergrim1234!@',
+          loginId: id,
+          password: password,
         }),
       },
     );
@@ -22,9 +37,9 @@ export default function Login() {
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.statusText}`);
     } else {
-      // 쿠키 설정
-      // const res = NextResponse.next();
-      // res.cookies.set('cookie-name', 'cookie-value');
+      // accessToken 저장
+      const res = NextResponse.next();
+      // res.cookies.set('accessToken', response.data.accessToken);
       router.push('/');
     }
   };
@@ -55,6 +70,8 @@ export default function Login() {
                     className="form-control"
                     id="floatingInput"
                     placeholder="ID"
+                    value={id}
+                    onChange={handleIdChange}
                   />
                   <label htmlFor="floatingInput">ID</label>
                 </div>
@@ -64,6 +81,8 @@ export default function Login() {
                     className="form-control"
                     id="floatingPassword"
                     placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
                   />
                   <label htmlFor="floatingPassword">Password</label>
                 </div>

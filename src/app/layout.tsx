@@ -6,6 +6,7 @@ import { meta_data } from '@/common/enums';
 import { Heebo, Noto_Sans_KR } from 'next/font/google';
 import SideBar from '@/components/navigation/SideBar';
 
+// font
 const heebo = Heebo({
   weight: ['400'],
   subsets: ['latin'],
