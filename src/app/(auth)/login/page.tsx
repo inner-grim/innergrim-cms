@@ -12,16 +12,16 @@ export default function Login() {
   // id 입력 시 호출
   const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setId(event.target.value);
-    console.log(event.target.value);
   };
 
   // password 입력 시 호출
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-    console.log(event.target.value);
   };
 
   const login = async () => {
+    console.log(`${process.env.NEXT_PUBLIC_API_URL}`);
+    console.log('##', id, password);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`,
       {
@@ -38,7 +38,7 @@ export default function Login() {
       throw new Error(`Failed to fetch data: ${response.statusText}`);
     } else {
       // accessToken 저장
-      const res = NextResponse.next();
+      // const res = NextResponse.next();
       // res.cookies.set('accessToken', response.data.accessToken);
       router.push('/');
     }
